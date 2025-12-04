@@ -1,40 +1,58 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+// src/context/AuthContext.js
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);   // { _id, name, email, role }
-  const [token, setToken] = useState(null); // JWT string
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // App load hone par localStorage se data nikaalo
+  // App load hone par localStorage se user read karo
   useEffect(() => {
-    const savedUser = localStorage.getItem("ss_user");
-    const savedToken = localStorage.getItem("ss_token");
-
-    if (savedUser && savedToken) {
-      setUser(JSON.parse(savedUser));
-      setToken(savedToken);
+    try {
+      const stored = localStorage.getItem("user");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        console.log("AUTH: initial user from localStorage >>>", parsed);
+        setUser(parsed);
+      }
+    } catch (err) {
+      console.error("AUTH: error reading user from localStorage", err);
     }
-    setLoading(false);
   }, []);
 
-  const login = (userData, jwtToken) => {
+  // LoginPage / RegisterPage se yahi call hota hai
+  const login = (userData) => {
+    console.log("AUTH login userData >>>", userData);
+
     setUser(userData);
-    setToken(jwtToken);
-    localStorage.setItem("ss_user", JSON.stringify(userData));
-    localStorage.setItem("ss_token", jwtToken);
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    const check = localStorage.getItem("user");
+    console.log("AUTH saved in localStorage >>>", check);
   };
 
   const logout = () => {
     setUser(null);
-    setToken(null);
-    localStorage.removeItem("ss_user");
-    localStorage.removeItem("ss_token");
+    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        setLoading,
+        login,
+        logout,
+        isAuthenticated: !!user,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

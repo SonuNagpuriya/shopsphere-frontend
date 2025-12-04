@@ -17,6 +17,7 @@ const isAdminUser = (user) => {
 const AddProductPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth(); // AuthContext se logged-in user
+
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -29,6 +30,7 @@ const AddProductPage = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   // Page load par check: admin hai ya nahi
   useEffect(() => {
@@ -60,14 +62,16 @@ const AddProductPage = () => {
     }
 
     try {
+      setSubmitting(true);
+
       const payload = {
         ...form,
         price: Number(form.price),
         countInStock: Number(form.countInStock || 0),
       };
 
-      // ✅ Backend route: POST /api/products  → "/products"
-      const { data } = await axiosClient.post("/products", payload);
+      // Pehle yahan const { data } tha, jo use nahi ho raha tha
+      await axiosClient.post("/products", payload);
 
       setSuccess("Product created successfully!");
 
@@ -89,8 +93,13 @@ const AddProductPage = () => {
       setError(
         err.response?.data?.message || "Failed to create product"
       );
+    } finally {
+      setSubmitting(false);
     }
   };
+
+  const isDisabled =
+    submitting || !user || !isAdminUser(user);
 
   return (
     <div style={{ padding: "20px", maxWidth: "500px", margin: "0 auto" }}>
@@ -163,18 +172,19 @@ const AddProductPage = () => {
 
         <button
           type="submit"
+          disabled={isDisabled}
           style={{
             marginTop: 8,
             padding: "8px 16px",
             borderRadius: "6px",
             border: "none",
-            backgroundColor: "#4f46e5",
+            backgroundColor: isDisabled ? "#9ca3af" : "#4f46e5",
             color: "#fff",
-            cursor: "pointer",
+            cursor: isDisabled ? "not-allowed" : "pointer",
             fontWeight: 600,
           }}
         >
-          Create Product
+          {submitting ? "Creating..." : "Create Product"}
         </button>
       </form>
     </div>
