@@ -72,24 +72,22 @@ This project is actively maintained and reflects real-world production practices
 
 ---
 
----
-
 ## Screenshots
 
-### Home – Product Listing
-![Home Page](screenshots/home.png)
+### Home Page
+![Home Page](./screenshots/home.png)
 
-### Login
-![Login Page](screenshots/login.png)
+### Login Page
+![Login Page](./screenshots/login.png)
 
-### Register
-![Register Page](screenshots/register.png)
+### Register Page
+![Register Page](./screenshots/register.png)
 
-### Cart
-![Cart Page](screenshots/cart.png)
+### Cart Page
+![Cart Page](./screenshots/cart.png)
 
 ### Admin – Add Product
-![Admin Add Product](screenshots/admin-add-product.png)
+![Admin Add Product](./screenshots/admin-add-product.png)
 
 ## Author
 
