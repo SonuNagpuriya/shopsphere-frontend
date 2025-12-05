@@ -72,6 +72,25 @@ This project is actively maintained and reflects real-world production practices
 
 ---
 
+---
+
+## Screenshots
+
+### Home – Product Listing
+![Home Page](screenshots/home.png)
+
+### Login
+![Login Page](screenshots/login.png)
+
+### Register
+![Register Page](screenshots/register.png)
+
+### Cart
+![Cart Page](screenshots/cart.png)
+
+### Admin – Add Product
+![Admin Add Product](screenshots/admin-add-product.png)
+
 ## Author
 
 *Sonu Nagpuriya*  
