@@ -1,7 +1,16 @@
-# ShopSphere – Frontend
+ShopSphere — Frontend
 
-ShopSphere is a modern e-commerce frontend application built with React as part of a full MERN stack project.
-It provides a clean and responsive shopping experience with authentication, cart management, and admin features.
+ShopSphere is a production-ready e-commerce frontend application built using React as part of a full MERN stack project.  
+The application provides a clean, responsive, and user-friendly shopping experience with role-based access control.
+
+---
+
+## Live Application
+
+The frontend application is deployed and publicly accessible.
+
+*Live URL:*  
+https://shopsphere-frontend-402dt1s2l-sonu-nagpuriyas-projects.vercel.app
 
 ---
 
@@ -11,51 +20,59 @@ It provides a clean and responsive shopping experience with authentication, cart
 - React Router DOM
 - Context API
 - Axios
-- CSS (Inline Style Objects)
+- CSS (inline style objects)
 
 ---
 
-## Features
+## Key Features
 
 ### User Features
-- User registration and login
-- Browse products
-- Product detail page
-- Add to cart and manage cart
-- Checkout process
-- View order history
+- User registration and authentication
+- Browse products with details view
+- Shopping cart management
+- Secure checkout flow
+- Order history tracking
 
 ### Admin Features
-- Admin login
-- Add new products
-- Manage products
-- View customer orders
+- Admin authentication
+- Product management (create, view, delete)
+- Order monitoring and management
+- Role-based route protection
 
 ---
 
-## Project Structure
+## Application Structure
+src/ ├── api/            # Axios client & API configuration ├── components/     # Reusable UI components & route guards ├── context/        # Auth & Cart context providers ├── pages/          # Application pages └── App.js          # Application routing & layout
+Copy code
 
-src/
-├── api/
-├── components/
-├── context/
-├── pages/
-├── App.js
-├── index.js
+---
 
-yaml
+## Authentication & Authorization
+
+- JWT-based authentication
+- Protected routes for authenticated users
+- Admin-only routes secured via role validation
+- Axios interceptor to attach auth token on each request
+
+---
+
+## Environment Configuration
+
+The frontend uses environment variables for backend communication.
+
+Example:
+REACT_APP_API_BASE_URL=<backend_api_url>
 Copy code
 
 ---
 
 ## Status
 
-This project is currently under active development.  
-Deployment details and live URLs will be added after hosting.
+This project is actively maintained and reflects real-world production practices, including deployment, authentication, and role-based access control.
 
 ---
 
 ## Author
 
-Sonu Nagpuriya  
+*Sonu Nagpuriya*  
 MERN Stack Developer
