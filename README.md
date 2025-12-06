@@ -10,8 +10,7 @@ The application provides a clean, responsive, and user-friendly shopping experie
 The frontend application is deployed and publicly accessible.
 
 *Live URL:*  
-https://shopsphere-frontend-402dt1s2l-sonu-nagpuriyas-projects.vercel.app
-
+https://shopsphere-frontend-jutevdoxs-sonu-nagpuriyas-projects.vercel.app
 ---
 
 ## Tech Stack
