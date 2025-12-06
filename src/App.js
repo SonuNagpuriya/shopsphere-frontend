@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
@@ -18,6 +18,8 @@ import AdminOrdersPage from "./pages/AdminOrdersPage";
 import AdminRoute from "./components/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import "./App.css";
+
 // helper – user admin hai ya nahi
 const isAdminUser = (user) => {
   if (!user) return false;
@@ -33,52 +35,91 @@ const Header = () => {
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    setMenuOpen(false);
+  };
+
+  const handleNavClick = () => {
+    setMenuOpen(false);
+  };
+
   return (
-    <header style={styles.header}>
-      <div style={styles.headerInner}>
+    <header className="app-header">
+      <div className="header-inner">
         {/* Brand */}
-        <Link to="/" style={styles.brand}>
+        <Link to="/" className="brand" onClick={handleNavClick}>
           ShopSphere
         </Link>
 
+        {/* Mobile menu button */}
+        <button
+          className="menu-button"
+          onClick={() => setMenuOpen((prev) => !prev)}
+        >
+          ☰
+        </button>
+
         {/* Right Navigation */}
-        <nav style={styles.nav}>
-          <Link to="/cart" style={styles.navLink}>
+        <nav className={`nav ${menuOpen ? "open" : ""}`}>
+          <Link to="/cart" className="nav-link" onClick={handleNavClick}>
             Cart ({totalItems})
           </Link>
 
           {user ? (
             <>
-              <Link to="/orders" style={styles.navLink}>
+              <Link to="/orders" className="nav-link" onClick={handleNavClick}>
                 My Orders
               </Link>
 
-              <span style={styles.userText}>Hello, {user.name}</span>
+              <span className="user-text">Hello, {user.name}</span>
 
               {isAdminUser(user) && (
                 <>
-                  <Link to="/admin/products" style={styles.navLink}>
+                  <Link
+                    to="/admin/products"
+                    className="nav-link"
+                    onClick={handleNavClick}
+                  >
                     Products
                   </Link>
-                  <Link to="/admin/products/new" style={styles.navLink}>
+                  <Link
+                    to="/admin/products/new"
+                    className="nav-link"
+                    onClick={handleNavClick}
+                  >
                     Add Product
                   </Link>
-                  <Link to="/admin/orders" style={styles.navLink}>
+                  <Link
+                    to="/admin/orders"
+                    className="nav-link"
+                    onClick={handleNavClick}
+                  >
                     Orders
                   </Link>
                 </>
               )}
 
-              <button onClick={logout} style={styles.logoutButton}>
+              <button className="btn-logout" onClick={handleLogout}>
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" style={styles.navLink}>
+              <Link
+                to="/login"
+                className="nav-link"
+                onClick={handleNavClick}
+              >
                 Login
               </Link>
-              <Link to="/register" style={styles.navLink}>
+              <Link
+                to="/register"
+                className="nav-link"
+                onClick={handleNavClick}
+              >
                 Register
               </Link>
             </>
@@ -91,12 +132,12 @@ const Header = () => {
 
 const AppLayout = ({ children }) => {
   return (
-    <div style={styles.appShell}>
+    <div className="app-shell">
       <Header />
-      <main style={styles.main}>{children}</main>
+      <main className="app-main">{children}</main>
 
-      <footer style={styles.footer}>
-        <div style={styles.footerInner}>
+      <footer className="app-footer">
+        <div className="footer-inner">
           <span>© {new Date().getFullYear()} ShopSphere</span>
           <span>Built with MERN Stack</span>
           <span>Developed by Sonu Nagpuriya</span>
@@ -184,86 +225,5 @@ function App() {
     </AuthProvider>
   );
 }
-
-const styles = {
-  appShell: {
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: "#f9fafb",
-  },
-  header: {
-    position: "sticky",
-    top: 0,
-    zIndex: 40,
-    backgroundColor: "#ffffff",
-    borderBottom: "1px solid #e5e7eb",
-    boxShadow: "0 2px 8px rgba(15, 23, 42, 0.06)",
-  },
-  headerInner: {
-    maxWidth: 1200,
-    margin: "0 auto",
-    padding: "10px 20px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 16,
-  },
-  brand: {
-    fontSize: 22,
-    fontWeight: 800,
-    textDecoration: "none",
-    color: "#4f46e5",
-    letterSpacing: "0.02em",
-  },
-  nav: {
-    display: "flex",
-    gap: 16,
-    alignItems: "center",
-    flexWrap: "wrap",
-    justifyContent: "flex-end",
-  },
-  navLink: {
-    fontSize: 14,
-    color: "#4f46e5",
-    textDecoration: "none",
-    fontWeight: 500,
-  },
-  userText: {
-    fontSize: 14,
-    color: "#111827",
-    fontWeight: 500,
-  },
-  logoutButton: {
-    padding: "6px 12px",
-    borderRadius: 999,
-    border: "1px solid #e5e7eb",
-    backgroundColor: "#ffffff",
-    cursor: "pointer",
-    fontSize: 13,
-    fontWeight: 500,
-  },
-  main: {
-    flex: 1,
-    minWidth: 0,
-  },
-  footer: {
-    marginTop: "auto",
-    padding: "12px 20px",
-    fontSize: 12,
-    textAlign: "center",
-    color: "#6b7280",
-    borderTop: "1px solid #e5e7eb",
-    backgroundColor: "#f9fafb",
-  },
-  footerInner: {
-    maxWidth: 1200,
-    margin: "0 auto",
-    display: "flex",
-    flexWrap: "wrap",
-    gap: 8,
-    justifyContent: "center",
-  },
-};
 
 export default App;

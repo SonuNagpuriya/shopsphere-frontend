@@ -173,7 +173,7 @@ const styles = {
     marginBottom: 24,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 700,
     marginBottom: 16,
   },
